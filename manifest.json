@@ -1,0 +1,16 @@
+{
+   "manifest_version":2,
+   "name":"Mush",
+   "description":"Share links with your friends",
+   "version":"1.1",
+   "browser_action":{
+      "default_icon" : "/img/logo.png",
+      "default_title": "Save to Mush",
+      "default_popup": "popup.html"  
+   },
+   "permissions":[
+      "activeTab",
+      "webNavigation",
+      "notifications"
+   ]
+}

@@ -1,0 +1,22 @@
+{
+  "name": "mush",
+  "version": "0.0.0",
+  "description": "",
+  "scripts": {
+    "start": "node server.js",
+    "build": "node node_modules/webpack/bin/webpack.js --colors --progress"
+  },
+  "author": "",
+  "license": "BSD",
+  "dependencies": {
+    "webpack": "~1.7.3",
+    "react": "~0.13.1",
+    "jsx-loader": "~0.12.2",
+    "style-loader": "~0.8.3",
+    "css-loader": "~0.9.1",
+    "autoprefixer-loader": "~1.2.0",
+    "qwest": "~1.5.9",
+    "file-loader": "~0.8.1",
+    "url-loader": "~0.5.5"
+  }
+}
