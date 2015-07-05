@@ -26,8 +26,8 @@ section.login form input {
 section.login .logo {
     flex-grow: 1;
 }
-section.login .button, header {
-    background: #3469D7;
+footer, header {
+    background: #262B2F;
     text-align: center;
     height: 50px;
     line-height: 50px;
@@ -35,6 +35,11 @@ section.login .button, header {
     font-weight: bold;
     text-transform: uppercase;
     letter-spacing: 1px;
+}
+footer, section.login form .button {
+    background-color: rgb(244, 244, 244);
+    color: #262B2F;
+    cursor: pointer;
 }
 section.mention {
     height: 300px;

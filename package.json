@@ -9,14 +9,15 @@
   "author": "",
   "license": "BSD",
   "dependencies": {
-    "webpack": "~1.7.3",
-    "react": "~0.13.1",
-    "jsx-loader": "~0.12.2",
-    "style-loader": "~0.8.3",
-    "css-loader": "~0.9.1",
     "autoprefixer-loader": "~1.2.0",
-    "qwest": "~1.5.9",
+    "axios": "^0.5.4",
+    "css-loader": "~0.9.1",
     "file-loader": "~0.8.1",
-    "url-loader": "~0.5.5"
+    "jsx-loader": "~0.12.2",
+    "qwest": "~1.5.9",
+    "react": "~0.13.1",
+    "style-loader": "~0.8.3",
+    "url-loader": "~0.5.5",
+    "webpack": "~1.7.3"
   }
 }

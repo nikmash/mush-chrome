@@ -1,69 +1,79 @@
 var React = require('react');
-var Qwest = require("qwest")
+var Axios = require("axios")
 
 var mention = React.createClass({
 	getInitialState: function() {
 		return {
 			friends:[], 
-			feed:false
+			link : false
 		};
 	},
 	componentWillMount: function() {
 		chrome.tabs.getSelected(null, function(tab) {
-		    Qwest.post("http://mush.io/api/me/post?session=" + this.props.auth.session, {
+		    Axios.post("link", {
 		        url : tab.url,
-		        caption : ""
-		    }, {dataType : "json"}).then(function(feed) {
+		    }).then(function(response) {
 		    	this.setState({
-		    		feed : JSON.parse(feed)
+		    		link : response.data.payload.link.id
 		    	});
 
-				Qwest.get("http://mush.io/api/me/friends?session=" + this.props.auth.session, {dataType : "json"}).then(function(friends) {
+				Axios.get("link/" + this.state.link + "/tagged").then(function(response) {
 					this.setState({
-						friends : JSON.parse(friends)
+						friends : response.data.payload
 					});
 
 				}.bind(this)).catch(function() {
-					console.log(arguments)
 				})
 
 		    }.bind(this))
 		}.bind(this));
 		
 	},
-	toggle : function(f) {
-		f.mentioned = !f.mentioned;
+	toggle : function(item) {
+		item.checked = !item.checked;
 		this.forceUpdate();
-		Qwest.post("http://mush.io/api/me/friends/" + f.id + (f.mentioned ? "/mention/" : "/unmention/") + this.state.feed.post.id  + "?session=" + this.props.auth.session, {dataType : "json"}).then(function(friends) {
-			this.forceUpdate();
-		}.bind(this))
+	},
+	send: function(f) {
+		var payload = this.state.friends
+			.filter(function(item) {
+				return item.checked
+			})
+			.map(function(item) {
+				return item.friend.id
+			})
+		Axios.post("link/" + this.state.link + "/tag", payload).then(function() {
+			window.close()
+		})
 	},
 	render: function() {
+		if(this.state.friends.length == 0)
+			return false
 		return (
 			<section className="mention">
 				<header>Tag Friends</header>
 				<ul>
 				{
-					this.state.friends.map(function(f) {
+					this.state.friends.map(function(item) {
 						var cx = React.addons.classSet({
-							active : f.mentioned
+							active : item.checked
 						})
+						if(item.tagged) return;
 						return (
 							<li className={cx}>
-								<a onClick={this.toggle.bind(this, f)}>
-									<img src={f.avatar} />
+								<a onClick={this.toggle.bind(this, item)}>
+									<img src={item.friend.image} />
 									<summary>
-										<h1>{f.name}</h1>
-										<h2>{f.email}</h2>
+										<h1>{item.friend.name}</h1>
+										<h2>{item.friend.email}</h2>
 									</summary>
 									<i></i>
 								</a>
 							</li>
 						)
-
 					}.bind(this))
 				}
 				</ul>
+				<footer onClick={this.send}>Done</footer>
 			</section>
 		);
 	}
