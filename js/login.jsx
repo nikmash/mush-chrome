@@ -11,11 +11,16 @@ var login = React.createClass({
 				</div>
 				<form>
 					<input ref="email" placeholder="Email" />
-					<input ref="password" placeholder="Password" type="password" />
+					<input onKeyPress={this.handleKeyPress} ref="password" placeholder="Password" type="password" />
 					<div className="button" onClick={this.login} >Login</div>
 				</form>
 			</section>
 		);
+	},
+	handleKeyPress: function(e) {
+		if (e.which === 13) {
+			this.login()
+		}
 	}
 
 });
